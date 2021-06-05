@@ -23,7 +23,7 @@ jobs:
     - name: Run tests
       run: cargo test --verbose
     - name: Release
-      uses: softprops/action-gh-release@v1
+      uses: actions/upload-artifact@v2
       if: startsWith(github.ref, 'refs/tags/')
       with:
         files: /home/runner/work/ci-example/ci-example/target/release/ci-example
