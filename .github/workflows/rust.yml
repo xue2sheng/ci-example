@@ -22,10 +22,16 @@ jobs:
       run: cargo test --verbose
     - name: Compress 
       run: tar cvzf ci-example.tar.gz /home/runner/work/ci-example/ci-example/target/release/ci-example
+    - name: Extra
+      run: echo ${{ github.sha }} > Release.txt
+    - name: Cat
+      run: cat Release.txt
     - name: Release
       uses: softprops/action-gh-release@v1 
       if: startsWith(github.ref, 'refs/tags/')
       with:
-        files: ci-example.tar.gz 
+        files: |
+          Release.txt
+          ci-example.tar.gz 
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
