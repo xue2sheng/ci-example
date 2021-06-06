@@ -1,0 +1,34 @@
+name: Release 
+
+on:
+  push:
+    tags:
+      - 'v*'
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  tagged-release:
+    name: "Tagged Release"
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build
+      run: cargo build --verbose --release
+    - name: Run tests
+      run: cargo test --verbose
+    - name: Compress 
+      run: tar cvzf ci-example.tar.gz /home/runner/work/ci-example/ci-example/target/release/ci-example
+    - name: Artifact 
+      uses: actions/upload-artifact@v2 
+      with:
+        name: ci-example.tar.gz 
+        path: ci-example.tar.gz
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - uses: :marvinpinto/action-automatic-releases@latest"
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        prerelease: false
+        files: ci-example.tar.gz

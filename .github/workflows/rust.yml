@@ -3,29 +3,24 @@ name: Rust
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 
 env:
   CARGO_TERM_COLOR: always
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
     - name: Build
-      run: cargo build --verbose --release
+      run: cargo build --verbose
     - name: Run tests
       run: cargo test --verbose
-    - name: Compress 
-      run: tar cvzf ci-example.tar.gz /home/runner/work/ci-example/ci-example/target/release/ci-example
     - name: Artifact 
       uses: actions/upload-artifact@v2 
       with:
-        name: ci-example.tar.gz 
-        path: ci-example.tar.gz
+        name: ci-example 
+        path: /home/runner/work/ci-example/ci-example/target/release/ci-example
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
