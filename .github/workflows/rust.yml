@@ -18,16 +18,14 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build
       run: cargo build --verbose --release
-    - name: List
-      run: ls -larth /home/runner/work/ci-example/ci-example/target/release
     - name: Run tests
       run: cargo test --verbose
+    - name: Compress 
+      run: tar cxvf ci-example.tar.gz /home/runner/work/ci-example/ci-example/target/release/ci-example
     - name: Release
-      uses: actions/upload-artifact@v2
+      uses: softprops/action-gh-release@v1 
+      if: startsWith(github.ref, 'refs/tags/')
       with:
-        name: ci-example
-        path: /home/runner/work/ci-example/ci-example/target/release/ci-example
+        files: ci-example.tar.gz 
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-
