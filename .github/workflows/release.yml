@@ -14,10 +14,14 @@ jobs:
     needs: [linux-tagged-release, windows-tagged-release]
 
     steps:
-    - name: Download artifacts
+    - name: Download Linux Artifacts
       uses: actions/download-artifact@v2
       with:
-        name: . 
+        name: linux-ci-example.tar.gz
+    - name: Download Windows Artifacts
+      uses: actions/download-artifact@v2
+      with:
+        name: windows-ci-example.tar.gz
     - name: Publish artifacts 
       uses: marvinpinto/action-automatic-releases@latest
       with:
