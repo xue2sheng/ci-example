@@ -21,7 +21,7 @@ jobs:
     - name: Download Windows Artifacts
       uses: actions/download-artifact@v2
       with:
-        name: windows-ci-example.tar.gz
+        name: windows-ci-example.zip
     - name: Publish artifacts 
       uses: marvinpinto/action-automatic-releases@latest
       with:
