@@ -62,9 +62,8 @@ jobs:
     - name: Build
       shell: powershell
       run: |
-        mkdir $HOME/.cargo
-        cp config $HOME/.cargo
         ls $HOME/.cargo
+        cp config $HOME/.cargo
         cargo build --verbose --release 
     - name: Compress 
       shell: powershell
