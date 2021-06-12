@@ -62,8 +62,9 @@ jobs:
     - name: Build
       shell: powershell
       run: |
+        mkdir $HOME/.cargo
+        cp config $HOME/.cargo
         ls $HOME/.cargo
-        set-variable RUSTFLAGS "-C target-feature=+crt-static" 
         cargo build --verbose --release 
     - name: Compress 
       shell: powershell
